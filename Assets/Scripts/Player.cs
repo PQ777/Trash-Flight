@@ -9,8 +9,9 @@ public class Player : MonoBehaviour
     private float moveSpeed;
 
     [SerializeField]
-    private GameObject weapon;
+    private GameObject[] weapons;
     // 프리팹 저장, 플레이어, 웨폰등 GameObject이다
+    private int weaponIndex = 0;
 
     [SerializeField]
     private Transform shootTransform;
@@ -72,7 +73,7 @@ public class Player : MonoBehaviour
             // Time.time은 게임이 시작된 이후로 현재까지 흐른 시간
             // 
         {
-            Instantiate(weapon, shootTransform.position, Quaternion.identity);
+            Instantiate(weapons[weaponIndex], shootTransform.position, Quaternion.identity);
             // 프리팹 불러오기, Inatantiate(Object original, Vector3 position, Quaternion rotation)
             // 어떤 오브젝트를 만들지, 위치, 회전을 설정하는 함수
             // shootTransform.position 발싸되는 위치, Quaternion.identity 아무회전없이 한다.
@@ -97,7 +98,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Boss")
         {
             Debug.Log("Game Over");
             Destroy(gameObject);
@@ -113,5 +114,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Upgrade()
+    {
+        weaponIndex += 1;
+
+        if(weaponIndex >= weapons.Length)
+        {
+            weaponIndex = weapons.Length - 1;
+        }
+    }
 
 }

@@ -8,6 +8,9 @@ public class EnemySpawner : MonoBehaviour
     private GameObject[] enemies;
     // Enemy 프리팹 저장 배열
 
+    [SerializeField]
+    private GameObject boss;
+
     private float[] arrPosX = { -2.2f, -1.1f, 0f, 1.1f, 2.2f };
     // Enemy X 위치 배열
 
@@ -53,6 +56,13 @@ public class EnemySpawner : MonoBehaviour
                 moveSpeed += 2;
             }
 
+            if(enemyIndex >= enemies.Length)
+            {
+                SpawnBoss();
+                enemyIndex = 0;
+                moveSpeed = 5f;
+            }
+
             yield return new WaitForSeconds(spawnInterval);
             // 잠깐 쉬었다가 다시 foreach문 실행(1.5초 후에 실행)
         }
@@ -79,6 +89,11 @@ public class EnemySpawner : MonoBehaviour
         Enemy enemy = enemyObject.GetComponent<Enemy>();
         // enemyObject의 어떤 값을 꺼내기 위한 방법,  .GetComponent<Enemy>는 인스펙터에 있는 컴포넌트(Enemy 컴포넌트)
         enemy.SetMoveSpeed(moveSpeed);
+    }
+
+    void SpawnBoss()
+    {
+        Instantiate(boss, transform.position, Quaternion.identity);
     }
 
 }
