@@ -5,6 +5,9 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
+    private GameObject coin;
+
+    [SerializeField]
     private float moveSpeed = 10f;
 
     private float minY = -7f;
@@ -44,6 +47,7 @@ public class Enemy : MonoBehaviour
             if(hp <= 0)
             {
                 Destroy(gameObject);
+                Instantiate(coin, transform.position, Quaternion.identity);
             }
 
             Destroy(collision.gameObject);

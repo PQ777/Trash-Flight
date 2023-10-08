@@ -103,6 +103,14 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
 
         }
+        else if(collision.gameObject.tag == "Coin")
+        {
+            GameManager.instance.IncreaseCoin();
+            // 게임매니저 싱글턴으로 쉽게 접근
+
+            //Debug.Log("COin + 1");
+            Destroy(collision.gameObject);
+        }
     }
 
 
