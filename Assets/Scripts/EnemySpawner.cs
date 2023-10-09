@@ -30,6 +30,11 @@ public class EnemySpawner : MonoBehaviour
         // IEnumerator 사용, ()안에 문자열 형태로 넣는다
     }
 
+    public void StopEnemyRoutine()
+    {
+        StopCoroutine("EnemyRoutine");
+    }
+
     IEnumerator EnemyRoutine()
     {
         yield return new WaitForSeconds(3f);

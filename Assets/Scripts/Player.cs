@@ -63,7 +63,10 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(toX, transform.position.y, transform.position.z);
         // +=를 하면 계속 증가시키고 =를 하면 바로 그 값을 설정을 한다, 마우스 위치를 바로 설정
 
-        Shoot();
+        if(GameManager.instance.isGameOver == false)
+        {
+            Shoot();
+        }
 
     }
 
@@ -100,7 +103,8 @@ public class Player : MonoBehaviour
     {
         if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Boss")
         {
-            Debug.Log("Game Over");
+            //Debug.Log("Game Over");
+            GameManager.instance.SetGameOver();
             Destroy(gameObject);
 
         }

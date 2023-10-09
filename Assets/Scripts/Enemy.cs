@@ -46,6 +46,10 @@ public class Enemy : MonoBehaviour
 
             if(hp <= 0)
             {
+                if(gameObject.tag == "Boss")
+                {
+                    GameManager.instance.SetGameOver();
+                }
                 Destroy(gameObject);
                 Instantiate(coin, transform.position, Quaternion.identity);
             }

@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor.SearchService;
 // TextMeshProUGUI 사용시 선언
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,8 +14,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI text;
 
+    [SerializeField]
+    private GameObject gameOverPanel;
+
     private int coin = 0;
     // 코인 개수
+
+    [HideInInspector]
+    public bool isGameOver = false;
 
     void Awake()    // start 보다 더 빠르게 실행된다
     {
@@ -42,6 +50,30 @@ public class GameManager : MonoBehaviour
                 player.Upgrade();
             }
         }
+    }
+
+    public void SetGameOver()
+    {
+        isGameOver = true;
+
+        EnemySpawner enemySpawner = FindObjectOfType<EnemySpawner>();
+
+        if(enemySpawner != null)
+        {
+            enemySpawner.StopEnemyRoutine();
+        }
+
+        Invoke("ShowGameOverPanel", 1f);
+    }
+
+    void ShowGameOverPanel()
+    {
+        gameOverPanel.SetActive(true);
+    }
+
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene("SampleScene");
     }
 
 }
